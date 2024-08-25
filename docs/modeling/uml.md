@@ -54,4 +54,6 @@ classDiagram
     Subject "1" -- "n" Module
     Module "1" -- "n" Test
     Test "1" -- "n" Question
+    Point -- Student
+    Point -- Subject
 ```
