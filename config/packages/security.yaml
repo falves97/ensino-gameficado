@@ -5,17 +5,32 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        app_professor_provider:
             entity:
-                class: App\Entity\User
+                class: App\Entity\Professor
+                property: email
+        app_student_provider:
+            entity:
+                class: App\Entity\Student
                 property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        admin:
+            lazy: true
+            pattern: ^/admin
+            provider: app_professor_provider
+            form_login:
+                login_path: app_admin_login
+                check_path: app_admin_login
+                enable_csrf: true
+                default_target_path: admin
+            logout:
+                path: app_admin_logout
         main:
             lazy: true
-            provider: app_user_provider
+            provider: app_student_provider
             form_login:
                 login_path: app_login
                 check_path: app_login
@@ -35,8 +50,14 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: /login$, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
+    
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_PROFESSOR
+        ROLE_PROFESSOR: ROLE_USER
+        ROLE_STUDENT: ROLE_USER
 
 when@test:
     security:
