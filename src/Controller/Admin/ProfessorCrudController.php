@@ -48,7 +48,8 @@ class ProfessorCrudController extends AbstractCrudController
                 ])->onlyOnForms(),
             ChoiceField::new('roles')
                 ->setChoices(['ROLE_USER' => 'ROLE_USER', 'ROLE_ADMIN' => 'ROLE_ADMIN', 'ROLE_PROFESSOR' => 'ROLE_PROFESSOR'])
-                ->allowMultipleChoices(),
+                ->allowMultipleChoices()
+                ->setPermission('ROLE_ADMIN'),
         ];
     }
 }

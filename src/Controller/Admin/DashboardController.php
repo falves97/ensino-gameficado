@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Module;
 use App\Entity\Professor;
 use App\Entity\Student;
 use App\Entity\Subject;
@@ -41,6 +42,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Subjects', 'fas fa-book', Subject::class)
             ->setPermission('ROLE_PROFESSOR');
         yield MenuItem::linkToCrud('Students', 'fas fa-user-graduate', Student::class)
+            ->setPermission('ROLE_PROFESSOR');
+        yield MenuItem::linkToCrud('Modules', 'fas fa-book-open', Module::class)
             ->setPermission('ROLE_PROFESSOR');
     }
 

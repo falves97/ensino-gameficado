@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -41,6 +42,10 @@ class SubjectCrudController extends AbstractCrudController
 
             FormField::addColumn(4),
             AssociationField::new('professor'),
+            AssociationField::new('students')->onlyOnDetail(),
+            AssociationField::new('modules')->onlyOnDetail(),
+            ArrayField::new('modules')
+                ->onlyOnDetail(),
         ];
     }
 }
