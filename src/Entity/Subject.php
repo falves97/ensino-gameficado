@@ -33,9 +33,16 @@ class Subject
     #[ORM\JoinColumn(nullable: false)]
     private ?Professor $professor = null;
 
+    /**
+     * @var Collection<int, Module>
+     */
+    #[ORM\OneToMany(targetEntity: Module::class, mappedBy: 'subject')]
+    private Collection $modules;
+
     public function __construct()
     {
         $this->students = new ArrayCollection();
+        $this->modules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,5 +113,35 @@ class Subject
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, Module>
+     */
+    public function getModules(): Collection
+    {
+        return $this->modules;
+    }
+
+    public function addModule(Module $module): static
+    {
+        if (!$this->modules->contains($module)) {
+            $this->modules->add($module);
+            $module->setSubject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModule(Module $module): static
+    {
+        if ($this->modules->removeElement($module)) {
+            // set the owning side to null (unless already changed)
+            if ($module->getSubject() === $this) {
+                $module->setSubject(null);
+            }
+        }
+
+        return $this;
     }
 }
