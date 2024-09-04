@@ -3,11 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Student;
-use Doctrine\Common\Collections\Collection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -46,11 +46,7 @@ class StudentCrudController extends AbstractCrudController
             AssociationField::new('subjects')
                 ->setFormTypeOption('by_reference', false)
                 ->hideOnDetail(),
-            AssociationField::new('subjects')
-                ->formatValue(function (Collection $value, Student $entity) {
-                    $names = $value->map(fn($subject) => $subject->getName())->toArray();
-                    return implode(', ', $names);
-                })
+            ArrayField::new('subjects')
                 ->onlyOnDetail(),
         ];
     }
