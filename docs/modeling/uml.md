@@ -47,6 +47,12 @@ classDiagram
         - description: string
         - test: Test
     }
+    class Alternative {
+        - id: int
+        - description: string
+        - isCorrect: boolean
+        - question: Question
+    }
 
     User <|-- Student
     User <|-- Professor
@@ -54,6 +60,7 @@ classDiagram
     Subject "1" -- "n" Module
     Module "1" -- "n" Test
     Test "1" -- "n" Question
+    Question "1" -- "n" Alternative
     Point -- Student
     Point -- Subject
 ```
