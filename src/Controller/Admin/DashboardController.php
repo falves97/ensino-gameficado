@@ -4,9 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Module;
 use App\Entity\Professor;
+use App\Entity\Question;
 use App\Entity\Student;
 use App\Entity\Subject;
+use App\Entity\Test;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
@@ -44,6 +48,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Students', 'fas fa-user-graduate', Student::class)
             ->setPermission('ROLE_PROFESSOR');
         yield MenuItem::linkToCrud('Modules', 'fas fa-book-open', Module::class)
+            ->setPermission('ROLE_PROFESSOR');
+        yield MenuItem::linkToCrud('Tests', 'fas fa-tasks', Test::class)
+            ->setPermission('ROLE_PROFESSOR');
+        yield MenuItem::linkToCrud('Questions', 'fas fa-question', Question::class)
             ->setPermission('ROLE_PROFESSOR');
     }
 
