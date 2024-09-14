@@ -36,7 +36,7 @@ class SubjectCrudController extends AbstractCrudController
     {
         return [
             FormField::addColumn(8),
-            IdField::new('id')->onlyOnIndex(),
+            IdField::new('id')->hideOnForm(),
             TextField::new('name'),
             TextEditorField::new('description'),
 
