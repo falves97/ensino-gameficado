@@ -30,6 +30,7 @@ Os relacionamentos entre essas entidades são:
 - Um **teste** contém várias **questões**.
 - Uma **questão** tem várias **alternativas**.
 - Um **ponto** está associado a um **estudante** e a uma **disciplina**.
+
 ```mermaid
 classDiagram
     class User {
