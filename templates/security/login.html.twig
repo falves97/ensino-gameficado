@@ -9,133 +9,82 @@
                 <img src="{{ asset('images/logo.jpg') }}" alt="Mascot"
                      class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg">
             </div>
+            <div class="pt-12">
+                <turbo-frame id="securityForm">
+                    <form method="post" class="space-y-4">
+                        {% if error %}
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
 
-            <turbo-frame id="securityForm">
-            {#            Login Form #}
-            <div id="loginForm">
-                <form method="post" class="space-y-4">
-                    {% if error %}
-                        <div
-                            class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
+                        {% if app.user %}
+                            <div class="mb-3">
+                                Você está logado como {{ app.user.userIdentifier }},
+                                <a class="text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out"
+                                   data-turbo-frame="_top"
+                                   href="{{ path('app_logout') }}">Logout!</a>
+                            </div>
+                        {% endif %}
 
-                    {% if app.user %}
-                        <div class="mb-3">
-                            You are logged in as {{ app.user.userIdentifier }}, <a
-                                href="{{ path('app_logout') }}">Logout</a>
+                        <div>
+                            <label for="username" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email"
+                                   value="{{ last_username }}"
+                                   name="_username"
+                                   id="username"
+                                   class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                   autocomplete="email"
+                                   required
+                                   autofocus
+                            >
                         </div>
-                    {% endif %}
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                            <input type="password"
+                                   name="_password"
+                                   id="password"
+                                   class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                   autocomplete="current-password"
+                                   required
+                            >
+                        </div>
 
-                    <div>
-                        <label for="username" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email"
-                               value="{{ last_username }}"
-                               name="_username"
-                               id="username"
-                               class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                               autocomplete="email"
-                               required
-                               autofocus
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
                         >
-                        <p class="mt-1 text-xs text-red-500 hidden">Please enter a valid email address.</p>
-                    </div>
-                    <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password"
-                               name="_password"
-                               id="password"
-                               class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                               autocomplete="current-password"
-                               required
-                        >
-                        <p class="mt-1 text-xs text-red-500 hidden">Password must be at least 8 characters long.</p>
-                    </div>
 
-                    <input type="hidden" name="_csrf_token"
-                           value="{{ csrf_token('authenticate') }}"
-                    >
+                        {#
+                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html
 
-                    {#
-                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                    See https://symfony.com/doc/current/security/remember_me.html
+                        <div class="checkbox mb-3">
+                            <input type="checkbox" name="_remember_me" id="_remember_me">
+                            <label for="_remember_me">Remember me</label>
+                        </div>
+                        #}
 
-                    <div class="checkbox mb-3">
-                        <input type="checkbox" name="_remember_me" id="_remember_me">
-                        <label for="_remember_me">Remember me</label>
+                        <button type="submit"
+                                data-turbo-frame="_top"
+                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+                            Entrar
+                        </button>
+                        <div class="flex items-center justify-between">
+                            <a href="{{ path('app_forgot_password') }}"
+
+                               class="text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out"
+                            >Esqueceu a senha?</a>
+                        </div>
+                    </form>
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-600">Não possui conta?
+                            <a href="{{ path('app_student_create') }}"
+                               class="font-medium text-blue-600 hover:text-blue-500"
+                            >Inscreva-se</a>
+                        </p>
                     </div>
-                    #}
-
-                    <button type="submit"
-                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
-                        Sign in
-                    </button>
-                    <div class="flex items-center justify-between">
-                        <a href="#"
-                           class="text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out"
-                           data-controller="security"
-                           data-action="click->security#toggleForm"
-                           data-security-form-to-show-value="forgotPasswordForm"
-                        >Esqueceu a senha?</a>
-                    </div>
-                </form>
-                <div class="mt-6 text-center">
-                    <p class="text-sm text-gray-600">Não possui conta?
-                        <a href="#"
-                           class="font-medium text-blue-600 hover:text-blue-500"
-                           data-controller="security"
-                           data-action="click->security#toggleForm"
-                           data-security-form-to-show-value="registerForm"
-                        >Inscreva-se</a>
-                    </p>
-                </div>
+                </turbo-frame>
             </div>
-
-            {#            Reset Password Form #}
-            <div id="registerForm" class="hidden">
-                <h2 class="text-3xl font-bold mb-6 text-blue-700 text-center mt-12">Cadastro</h2>
-                <form class="space-y-4">
-                    <div>
-                        <label for="registerName" class="block text-sm font-medium text-gray-700">Nome</label>
-                        <input type="text" id="registerName" name="registerName" required
-                               class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                               placeholder="Digite seu nome">
-                    </div>
-                    <div>
-                        <label for="registerEmail" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" id="registerEmail" name="registerEmail" required
-                               class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                               placeholder="Digite seu email">
-                    </div>
-                    <div>
-                        <label for="registerPassword" class="block text-sm font-medium text-gray-700">Senha</label>
-                        <input type="password" id="registerPassword" name="registerPassword" required
-                               class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                               placeholder="Digite sua senha">
-                    </div>
-                    <div>
-                        <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirmar
-                            Senha</label>
-                        <input type="password" id="confirmPassword" name="confirmPassword" required
-                               class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                               placeholder="Confirme sua senha">
-                    </div>
-                    <button type="submit"
-                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
-                        Cadastrar
-                    </button>
-                </form>
-                <div class="mt-6 text-center">
-                    <p class="text-sm text-gray-600">Já possui uma conta?
-                        <a href="#"
-                           class="font-medium text-blue-600 hover:text-blue-500"
-                           data-controller="security"
-                           data-action="click->security#toggleForm"
-                           data-security-form-to-show-value="loginForm"
-                        >Faça login</a>
-                    </p>
-                </div>
-            </div>
-            </turbo-frame>
         </div>
     </div>
 {% endblock %}

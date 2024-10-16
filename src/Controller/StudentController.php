@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Student;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,12 +21,12 @@ class StudentController extends AbstractController
         $student = new Student();
 
         $createForm = $this->createFormBuilder($student)
-            ->add('name')
-            ->add('email')
+            ->add('name', TextType::class, ['label' => 'Nome'])
+            ->add('email', EmailType::class, ['label' => 'E-mail'])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options' => ['label' => 'Senha'],
+                'second_options' => ['label' => 'Repita a senha'],
             ])
             ->getForm();
 
