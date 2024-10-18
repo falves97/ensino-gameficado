@@ -3,7 +3,8 @@
 {% block title %}Registro{% endblock %}
 
 {% block body %}
-    {% form_theme createForm 'tailwind_2_layout.html.twig' %}
+    {% form_theme createForm with ['tailwind_2_layout.html.twig', 'form/fba_theme.html.twig'] %}
+
     <div class="bg-gradient-to-r from-blue-300 to-blue-500 min-h-screen flex items-center justify-center">
         <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md relative">
             <div class="absolute -top-20 left-1/2 transform -translate-x-1/2">
@@ -12,53 +13,27 @@
             </div>
 
             <div class="pt-12">
-                <turbo-frame id="securityForm">
-                    <h2 class="text-3xl mb-6 text-blue-600 text-center">Cadastre-se</h2>
-                    {{ form_start(createForm, {
-                        attr: {
-                            class: 'space-y-4',
-                        }
-                    }) }}
+                <h2 class="text-3xl mb-6 text-blue-600 text-center">Cadastre-se</h2>
+                {{ form_start(createForm) }}
 
-                    {{ form_row(createForm.name, {
-                        row_class: 'mb-0',
-                        label_class: 'block text-sm font-medium text-gray-700',
-                        widget_class: 'mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500',
-                    }) }}
+                {{ form_row(createForm.name) }}
+                {{ form_row(createForm.email) }}
+                {{ form_row(createForm.plainPassword) }}
 
-                    {{ form_row(createForm.email, {
-                        row_class: 'mb-0',
-                        label_class: 'block text-sm font-medium text-gray-700',
-                        widget_class: 'mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500',
-                    }) }}
+                <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                >
+                    Cadastrar
+                </button>
 
-                    {{ form_row(createForm.password.first, {
-                        row_class: 'mb-0',
-                        label_class: 'block text-sm font-medium text-gray-700',
-                        widget_class: 'mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500',
-                    }) }}
-
-                    {{ form_row(createForm.password.second, {
-                        row_class: 'mb-0',
-                        label_class: 'block text-sm font-medium text-gray-700',
-                        widget_class: 'mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500',
-                    }) }}
-
-                    <button type="submit"
-                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
-                    >
-                        Cadastrar
-                    </button>
-
-                    {{ form_end(createForm) }}
-                    <div class="mt-6 text-center">
-                        <p class="text-sm text-gray-600">Já possui uma conta?
-                            <a href="{{ path('app_login') }}"
-                               class="font-medium text-blue-600 hover:text-blue-500"
-                            >Faça login</a>
-                        </p>
-                    </div>
-                </turbo-frame>
+                {{ form_end(createForm) }}
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">Já possui uma conta?
+                        <a href="{{ path('app_login') }}"
+                           class="font-medium text-blue-600 hover:text-blue-500"
+                        >Faça login</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

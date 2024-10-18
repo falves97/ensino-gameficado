@@ -10,80 +10,77 @@
                      class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg">
             </div>
             <div class="pt-12">
-                <turbo-frame id="securityForm">
-                    <form method="post" class="space-y-4">
-                        {% if error %}
-                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
-                                {{ error.messageKey|trans(error.messageData, 'security') }}
-                            </div>
-                        {% endif %}
-
-                        {% if app.user %}
-                            <div class="mb-3">
-                                Você está logado como {{ app.user.userIdentifier }},
-                                <a class="text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out"
-                                   data-turbo-frame="_top"
-                                   href="{{ path('app_logout') }}">Logout!</a>
-                            </div>
-                        {% endif %}
-
-                        <div>
-                            <label for="username" class="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email"
-                                   value="{{ last_username }}"
-                                   name="_username"
-                                   id="username"
-                                   class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                                   autocomplete="email"
-                                   required
-                                   autofocus
-                            >
+                <form method="post" class="space-y-4">
+                    {% if error %}
+                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
                         </div>
-                        <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                            <input type="password"
-                                   name="_password"
-                                   id="password"
-                                   class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                                   autocomplete="current-password"
-                                   required
-                            >
-                        </div>
+                    {% endif %}
 
-                        <input type="hidden" name="_csrf_token"
-                               value="{{ csrf_token('authenticate') }}"
+                    {% if app.user %}
+                        <div class="mb-3">
+                            Você está logado como {{ app.user.userIdentifier }},
+                            <a class="text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out"
+                               data-turbo-frame="_top"
+                               href="{{ path('app_logout') }}">Logout!</a>
+                        </div>
+                    {% endif %}
+
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email"
+                               value="{{ last_username }}"
+                               name="_username"
+                               id="username"
+                               class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                               autocomplete="email"
+                               required
+                               autofocus
                         >
-
-                        {#
-                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                        See https://symfony.com/doc/current/security/remember_me.html
-
-                        <div class="checkbox mb-3">
-                            <input type="checkbox" name="_remember_me" id="_remember_me">
-                            <label for="_remember_me">Remember me</label>
-                        </div>
-                        #}
-
-                        <button type="submit"
-                                data-turbo-frame="_top"
-                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
-                            Entrar
-                        </button>
-                        <div class="flex items-center justify-between">
-                            <a href="{{ path('app_forgot_password') }}"
-
-                               class="text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out"
-                            >Esqueceu a senha?</a>
-                        </div>
-                    </form>
-                    <div class="mt-6 text-center">
-                        <p class="text-sm text-gray-600">Não possui conta?
-                            <a href="{{ path('app_student_create') }}"
-                               class="font-medium text-blue-600 hover:text-blue-500"
-                            >Inscreva-se</a>
-                        </p>
                     </div>
-                </turbo-frame>
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password"
+                               name="_password"
+                               id="password"
+                               class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                               autocomplete="current-password"
+                               required
+                        >
+                    </div>
+
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+
+                    {#
+                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                    See https://symfony.com/doc/current/security/remember_me.html
+
+                    <div class="checkbox mb-3">
+                        <input type="checkbox" name="_remember_me" id="_remember_me">
+                        <label for="_remember_me">Remember me</label>
+                    </div>
+                    #}
+
+                    <button type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+                        Entrar
+                    </button>
+                    <div class="flex items-center justify-between">
+                        <a href="{{ path('app_forgot_password') }}"
+
+                           class="text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out"
+                        >Esqueceu a senha?</a>
+                    </div>
+                </form>
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">Não possui conta?
+                        <a href="{{ path('app_student_create') }}"
+                           class="font-medium text-blue-600 hover:text-blue-500"
+                        >Inscreva-se</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
