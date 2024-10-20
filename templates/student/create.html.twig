@@ -13,8 +13,12 @@
             </div>
 
             <div class="pt-12">
-                <h2 class="text-3xl mb-6 text-blue-600 text-center">Cadastre-se</h2>
-                {{ form_start(createForm) }}
+                <h1 class="text-3xl mb-6 text-blue-600 text-center">Cadastre-se</h1>
+                {{ form_start(createForm, {
+                    attr: {
+                        class : 'space-y-4'
+                    }
+                }) }}
 
                 {{ form_row(createForm.name) }}
                 {{ form_row(createForm.email) }}
