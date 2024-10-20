@@ -25,18 +25,6 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/forgot-password', name: 'app_forgot_password', methods: ['GET', 'POST'])]
-    public function forgotPassword(): Response
-    {
-        $forgotPasswordForm = $this->createFormBuilder()
-            ->add('email', EmailType::class, ['label' => 'E-mail'])
-            ->getForm();
-
-        return $this->render('security/forgotPassword.html.twig', [
-            'forgotPasswordForm' => $forgotPasswordForm->createView(),
-        ]);
-    }
-
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
