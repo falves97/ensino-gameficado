@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-mail de Redefinição de Senha Enviado{% endblock %}
+
+{% block body %}
+    <div class="bg-gradient-to-r from-blue-300 to-blue-500 min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md relative">
+            <div class="absolute -top-20 left-1/2 transform -translate-x-1/2">
+                <img src="{{ asset('images/logo.jpg') }}" alt="Mascot"
+                     class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg">
+            </div>
+            <div class="pt-12">
+                <p>
+                    Se uma conta correspondente ao seu e-mail existir, um e-mail foi enviado contendo um link que você
+                    pode usar para redefinir sua senha.
+                    Este link expirará
+                    em {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+                </p>
+                <p>Se você não receber um e-mail, por favor verifique sua pasta de spam ou <a
+                        href="{{ path('app_forgot_password_request') }}">tente novamente</a>.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

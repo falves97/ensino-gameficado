@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt_BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Recuperação de Senha</title>
+    <style>
+        /* Estilo geral do email de recuperação de senha */
+        body {
+            background-color: #f7f7f7;
+        }
+
+        .email-container {
+            /* Estilo do container do email */
+            max-width: 500px;
+            width: 100%;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-message {
+            /* Estilo da mensagem principal */
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .email-button {
+            /* Estilo do botão de resetar senha */
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            margin: auto;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <h1 class="email-message">Olá!</h1>
+    <p>Para recuperar a senha, por favor, clique no botão abaixo</p>
+    <a class="email-button"
+       href="{{ url('app_reset_password', {token: resetToken.token}) }}"
+    >
+        Recuperar Senha
+    </a>
+    <p>Este link vence
+        em {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+    <p>Atenciosamente!</p>
+</div>
+</body>
+</html>
+
+
