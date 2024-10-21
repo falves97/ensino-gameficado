@@ -39,6 +39,8 @@ class Subject
     #[ORM\OneToMany(targetEntity: Module::class, mappedBy: 'subject')]
     private Collection $modules;
 
+    private float $progress = 0;
+
     public function __construct()
     {
         $this->students = new ArrayCollection();
@@ -143,5 +145,15 @@ class Subject
         }
 
         return $this;
+    }
+
+    public function getProgress(): float
+    {
+        return $this->progress;
+    }
+
+    public function setProgress(float $progress): void
+    {
+        $this->progress = $progress;
     }
 }
