@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Teste: {{ test.name }}{% endblock %}
+
+{% block body %}
+    {% form_theme formTest with ['tailwind_2_layout.html.twig', 'form/fba_theme.html.twig'] %}
+    <main class="flex-grow container mx-auto my-8 p-4">
+        <h2 class="text-2xl font-semibold mb-6">Teste: {{ test.name }}</h2>
+
+        {{ form(formTest) }}
+
+        {#        {% for  question in test.questions %} #}
+        {#            <div class="bg-white shadow-md rounded-lg p-6 mb-6 space-y-4"> #}
+        {#                <h3 class="text-xl font-semibold">{{ question.description }}</h3> #}
+        {#                {% for alternative in question.alternatives %} #}
+        {#                    <div class="flex items-center"> #}
+        {#                        <input type="radio" id="option{{ alternative.id }}" name="question{{ question.id }}" #}
+        {#                               value="{{ alternative.id }}"> #}
+        {#                        <label for="option{{ alternative.id }}" class="ml-2">{{ alternative.description }}</label> #}
+        {#                    </div> #}
+        {#                {% endfor %} #}
+        {#            </div> #}
+        {#        {% endfor %} #}
+
+        <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
+            Enviar
+        </button>
+    </main>
+{% endblock %}

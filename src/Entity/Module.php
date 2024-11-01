@@ -33,6 +33,11 @@ class Module
     #[ORM\OneToMany(targetEntity: Test::class, mappedBy: 'module')]
     private Collection $tests;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
+
+    private int $progress = 0;
+
     public function __construct()
     {
         $this->tests = new ArrayCollection();
@@ -112,5 +117,25 @@ class Module
         }
 
         return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function getProgress(): int
+    {
+        return $this->progress;
+    }
+
+    public function setProgress(int $progress): void
+    {
+        $this->progress = $progress;
     }
 }

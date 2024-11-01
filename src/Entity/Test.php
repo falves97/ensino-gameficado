@@ -29,9 +29,16 @@ class Test
     #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'test')]
     private Collection $questions;
 
+    /**
+     * @var Collection<int, StudentTest>
+     */
+    #[ORM\OneToMany(targetEntity: StudentTest::class, mappedBy: 'test')]
+    private Collection $studentTests;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
+        $this->studentTests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,6 +98,41 @@ class Test
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, StudentTest>
+     */
+    public function getStudentTests(): Collection
+    {
+        return $this->studentTests;
+    }
+
+    public function addStudentTest(StudentTest $studentTest): static
+    {
+        if (!$this->studentTests->contains($studentTest)) {
+            $this->studentTests->add($studentTest);
+            $studentTest->setTest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudentTest(StudentTest $studentTest): static
+    {
+        if ($this->studentTests->removeElement($studentTest)) {
+            // set the owning side to null (unless already changed)
+            if ($studentTest->getTest() === $this) {
+                $studentTest->setTest(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isRealizedByStudent(Student $student): bool
+    {
+        return $this->studentTests->exists(fn(int $key, StudentTest $studentTest) => $studentTest->getStudent() === $student);
     }
 
     public function __toString(): string

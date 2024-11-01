@@ -2,6 +2,7 @@
 
 {% block title %}Redefina sua senha{% endblock %}
 
+{% block header %}{% endblock %}
 {% block body %}
     {% form_theme resetForm with ['tailwind_2_layout.html.twig', 'form/fba_theme.html.twig'] %}
 
@@ -27,3 +28,4 @@
         </div>
     </div>
 {% endblock %}
+{% block footer %}{% endblock %}

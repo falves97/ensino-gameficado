@@ -24,3 +24,35 @@
         </ul>
     {%- endif -%}
 {%- endblock form_errors -%}
+
+{% block _test_form_question_row %}
+    <div class="bg-white shadow-md rounded-lg p-6 mb-6 space-y-4">
+        {{ block('_test_form_question_widget') }}
+    </div>
+{% endblock %}
+
+
+
+{# {% block collection_row %} ... {% endblock %} #}
+{# {% block collection_label %} ... {% endblock %} #}
+{# {% block collection_widget %} ... {% endblock %} #}
+{# {% block collection_help %} ... {% endblock %} #}
+{# {% block collection_errors %} ... {% endblock %} #}
+
+{# {% block collection_entry_row %} ... {% endblock %} #}
+{# {% block collection_entry_label %} ... {% endblock %} #}
+{# {% block collection_entry_widget %} ... {% endblock %} #}
+{# {% block collection_entry_help %} ... {% endblock %} #}
+{# {% block collection_entry_errors %} ... {% endblock %} #}
+
+{% block _test_form_questions_entry_row %}
+    <div class="bg-white shadow-md rounded-lg p-6 mb-6 space-y-4">
+        {{ block('_test_form_questions_entry_widget') }}
+    </div>
+{% endblock %}
+
+{% block _test_form_questions_entry_widget %}
+    <h3 class="text-xl font-semibold">{{ field_value(form.description) }}</h3>
+    {{ form_rest(form) }}
+{% endblock %}
+

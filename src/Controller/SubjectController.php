@@ -12,15 +12,15 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/app/subject')]
 class SubjectController extends AbstractController
 {
-    #[Route('/', name: 'app_subject')]
-    public function index(): Response
+    #[Route('/{id}', name: 'app_subject_show')]
+    public function show(Subject $subject): Response
     {
-        return $this->render('subject/index.html.twig', [
-            'controller_name' => 'SubjectController',
+        return $this->render('subject/show.html.twig', [
+            'subject' => $subject,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_subject_enroll')]
+    #[Route('/{id}/enroll', name: 'app_subject_enroll')]
     public function enroll(Subject $subject, EntityManagerInterface $entityManager): Response
     {
         /** @var Student $student */

@@ -1,0 +1,26 @@
+<header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Plataforma de Ensino</h1>
+        <div class="flex items-center space-x-4">
+            {% if app.user %}
+                <!-- Se o usuário estiver logado -->
+                <img
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80"
+                    alt="Perfil do Estudante" class="w-10 h-10 rounded-full">
+                <span>{{ app.user.name }}</span>
+                <a
+                    class="flex justify-center py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                    href="{{ url('app_logout') }}">
+                    Sair
+                </a>
+            {% else %}
+                <!-- Se o usuário não estiver logado -->
+                <a
+                    class="flex justify-center py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                    href="{{ url('app_login') }}">
+                    Entrar
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</header>
