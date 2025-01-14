@@ -1,4 +1,4 @@
-{% use 'form_div_layout.html.twig' %}
+{% use 'tailwind_2_layout.html.twig' %}
 
 {%- block form_row -%}
     {%- set row_attr = row_attr|merge({ class: row_attr.class|default(row_class|default('mb-0')) }) -%}
@@ -26,33 +26,89 @@
 {%- endblock form_errors -%}
 
 {% block _test_form_question_row %}
-    <div class="bg-white shadow-md rounded-lg p-6 mb-6 space-y-4">
-        {{ block('_test_form_question_widget') }}
-    </div>
+    {% set row_attr = row_attr|merge({ class: row_attr.class|default('bg-white shadow-md rounded-lg p-6 mb-6') }) %}
+    {{- block('form_row') -}}
 {% endblock %}
 
-
-
-{# {% block collection_row %} ... {% endblock %} #}
-{# {% block collection_label %} ... {% endblock %} #}
-{# {% block collection_widget %} ... {% endblock %} #}
-{# {% block collection_help %} ... {% endblock %} #}
-{# {% block collection_errors %} ... {% endblock %} #}
-
-{# {% block collection_entry_row %} ... {% endblock %} #}
-{# {% block collection_entry_label %} ... {% endblock %} #}
-{# {% block collection_entry_widget %} ... {% endblock %} #}
-{# {% block collection_entry_help %} ... {% endblock %} #}
-{# {% block collection_entry_errors %} ... {% endblock %} #}
-
-{% block _test_form_questions_entry_row %}
-    <div class="bg-white shadow-md rounded-lg p-6 mb-6 space-y-4">
-        {{ block('_test_form_questions_entry_widget') }}
-    </div>
+{% block _test_form_question_label %}
+    {%- set label_attr = label_attr|merge({ class: label_attr.class|default(label_class|default('flex text-xl font-semibold text-gray-800 mb-4')) }) -%}
+    {%- set element = 'h3' -%}
+    {%- set label = number ? number ~ ') ' ~ label : label -%}
+    {{- block('form_label') -}}
 {% endblock %}
 
-{% block _test_form_questions_entry_widget %}
-    <h3 class="text-xl font-semibold">{{ field_value(form.description) }}</h3>
-    {{ form_rest(form) }}
+{%- block _test_form_question_alternatives_widget -%}
+    {%- set attr = attr|merge({ class: attr.class|default('space-y-4 mt-2') }) -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <div class="flex items-center w-full">
+                {{- form_widget(child) -}}
+                {{- form_label(child, null, { translation_domain: choice_translation_domain }) -}}
+            </div>
+        {% endfor -%}
+    </div>
+{%- endblock _test_form_question_alternatives_widget -%}
+
+{% block _test_form_question_alternatives_entry_label %}
+    {%- set letters = ['A', 'B', 'C', 'D', 'E'] -%}
+    {%- set label_attr = label_attr|merge({ class: label_attr.class|default(label_class|default('w-full text-left p-4 rounded-lg transition-all hover:bg-blue-50 border-2 border-transparent flex items-center space-x-3 cursor-pointer peer-checked:bg-blue-100 peer-checked:border-blue-500 peer-checked:*:border-blue-500')) }) -%}
+    {% if label is not same as(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+        {{- block('_test_form_question_alternatives_entry_label_content') -}}
+        </{{ element|default('label') }}>
+    {%- endif -%}
+{% endblock %}
+
+{% block _test_form_question_alternatives_entry_label_content %}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    {%- if translation_domain is same as(false) -%}
+        {%- if label_html is same as(false) -%}
+            <span
+                class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-gray-300 shrink-0">
+                 {{ letters[name] }}
+             </span>
+            <span class="flex-grow">{{ label }}</span>
+        {%- else -%}
+            <span
+                class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-gray-300 shrink-0">
+                 {{ letters[name] }}
+             </span>
+            <span class="flex-grow">{{ label|raw }}</span>
+        {%- endif -%}
+    {%- else -%}
+        {%- if label_html is same as(false) -%}
+            <span
+                class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-gray-300 shrink-0">
+                 {{ letters[name] }}
+             </span>
+            <span class="flex-grow">{{- label|trans(label_translation_parameters, translation_domain) -}}</span>
+        {%- else -%}
+            <span
+                class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-gray-300 shrink-0">
+                 {{ letters[name] }}
+             </span>
+            <span class="flex-grow">{{- label|trans(label_translation_parameters, translation_domain)|raw -}}</span>
+        {%- endif -%}
+    {%- endif -%}
+{% endblock %}
+
+{% block _test_form_question_alternatives_entry_widget %}
+    {%- set widget_class = widget_class|default('peer hidden') -%}
+    {{- block('radio_widget') -}}
 {% endblock %}
 

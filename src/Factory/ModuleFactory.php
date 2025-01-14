@@ -10,15 +10,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class ModuleFactory extends PersistentProxyObjectFactory
 {
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
-     */
-    public function __construct()
-    {
-    }
-
     public static function class(): string
     {
         return Module::class;
@@ -26,8 +17,6 @@ final class ModuleFactory extends PersistentProxyObjectFactory
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     *
-     * @todo add your default values here
      */
     protected function defaults(): array|callable
     {
@@ -35,7 +24,6 @@ final class ModuleFactory extends PersistentProxyObjectFactory
             'content' => self::faker()->text(),
             'description' => self::faker()->text(),
             'name' => self::faker()->text(255),
-            'subject' => SubjectFactory::new(),
         ];
     }
 

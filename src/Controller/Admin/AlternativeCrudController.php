@@ -21,7 +21,10 @@ class AlternativeCrudController extends AbstractCrudController
         return [
             FormField::addColumn(12),
             IdField::new('id')->hideOnForm(),
-            BooleanField::new('isCorrect'),
+            BooleanField::new('isCorrect')
+                ->setDisabled(),
+            BooleanField::new('isCorrect')
+                ->onlyWhenCreating(),
             TextEditorField::new('description'),
         ];
     }

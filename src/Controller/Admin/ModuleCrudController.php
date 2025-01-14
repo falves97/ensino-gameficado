@@ -31,6 +31,7 @@ class ModuleCrudController extends AbstractCrudController
             IdField::new('id')->onlyOnDetail(),
             TextField::new('name'),
             AssociationField::new('subject'),
+            TextEditorField::new('description'),
             TextEditorField::new('content'),
         ];
     }

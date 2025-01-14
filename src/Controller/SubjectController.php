@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/app/subject')]
 class SubjectController extends AbstractController
 {
-    #[Route('/{id}', name: 'app_subject_show')]
+    #[Route('/{id}', name: 'app_subject_show', methods: ['GET'])]
     public function show(Subject $subject): Response
     {
         return $this->render('subject/show.html.twig', [
@@ -20,7 +20,7 @@ class SubjectController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/enroll', name: 'app_subject_enroll')]
+    #[Route('/{id}/enroll', name: 'app_subject_enroll', methods: ['GET'])]
     public function enroll(Subject $subject, EntityManagerInterface $entityManager): Response
     {
         /** @var Student $student */

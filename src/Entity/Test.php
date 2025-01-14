@@ -26,7 +26,7 @@ class Test
     /**
      * @var Collection<int, Question>
      */
-    #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'test')]
+    #[ORM\ManyToMany(targetEntity: Question::class, inversedBy: 'tests')]
     private Collection $questions;
 
     /**
@@ -71,36 +71,6 @@ class Test
     }
 
     /**
-     * @return Collection<int, Question>
-     */
-    public function getQuestions(): Collection
-    {
-        return $this->questions;
-    }
-
-    public function addQuestion(Question $question): static
-    {
-        if (!$this->questions->contains($question)) {
-            $this->questions->add($question);
-            $question->setTest($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuestion(Question $question): static
-    {
-        if ($this->questions->removeElement($question)) {
-            // set the owning side to null (unless already changed)
-            if ($question->getTest() === $this) {
-                $question->setTest(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, StudentTest>
      */
     public function getStudentTests(): Collection
@@ -130,13 +100,32 @@ class Test
         return $this;
     }
 
-    public function isRealizedByStudent(Student $student): bool
+    /**
+     * @return Collection<int, Question>
+     */
+    public function getQuestions(): Collection
     {
-        return $this->studentTests->exists(fn(int $key, StudentTest $studentTest) => $studentTest->getStudent() === $student);
+        return $this->questions;
+    }
+
+    public function addQuestion(Question $question): static
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): static
+    {
+        $this->questions->removeElement($question);
+
+        return $this;
     }
 
     public function __toString(): string
     {
-        return $this->name . ' - ' . $this->module->getName() . ' - ' . $this->module->getSubject()->getName();
+        return $this->name.' - '.$this->module->getName().' - '.$this->module->getSubject()->getName();
     }
 }

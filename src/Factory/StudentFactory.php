@@ -2,7 +2,6 @@
 
 namespace App\Factory;
 
-use AllowDynamicProperties;
 use App\Entity\Student;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
@@ -10,12 +9,10 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 /**
  * @extends PersistentProxyObjectFactory<Student>
  */
-#[AllowDynamicProperties] final class StudentFactory extends PersistentProxyObjectFactory
+#[\AllowDynamicProperties] final class StudentFactory extends PersistentProxyObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
      */
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
@@ -30,8 +27,6 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     *
-     * @todo add your default values here
      */
     protected function defaults(): array|callable
     {

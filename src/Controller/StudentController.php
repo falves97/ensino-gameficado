@@ -48,7 +48,6 @@ class StudentController extends AbstractController
             return $this->redirectToRoute('app_index');
         }
 
-
         return $this->render('student/create.html.twig', [
             'createForm' => $createForm,
         ]);

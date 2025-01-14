@@ -1,5 +1,5 @@
-<header class="bg-blue-600 text-white p-4">
-    <div class="container mx-auto flex justify-between items-center">
+<header class="flex bg-blue-600 text-white p-4">
+    <a href="{{ url('app_index') }}" class="container mx-auto flex justify-between items-center">
         <h1 class="text-2xl font-bold">Plataforma de Ensino</h1>
         <div class="flex items-center space-x-4">
             {% if app.user %}
@@ -22,5 +22,5 @@
                 </a>
             {% endif %}
         </div>
-    </div>
+    </a>
 </header>

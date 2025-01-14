@@ -68,6 +68,6 @@ class Alternative
 
     public function __toString(): string
     {
-        return 'Alternative #' . $this->id;
+        return $this->description;
     }
 }

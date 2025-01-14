@@ -40,4 +40,26 @@ class TestRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findByModule(int $moduleId): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.module = :moduleId')
+            ->setParameter('moduleId', $moduleId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findNotAnsweredTestsByStudentAndModule(int $moduleId): array
+    {
+        $query = $this->createQueryBuilder('t')
+            ->join('t.module', 'm')
+            ->leftJoin('t.studentTests', 'st')
+            ->andWhere('m.id = :moduleId')
+            ->andWhere('st.student IS NULL')
+            ->setParameter('moduleId', $moduleId)
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

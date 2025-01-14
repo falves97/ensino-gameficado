@@ -10,19 +10,20 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AppController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+    #[Route('/', name: 'app_home', methods: ['GET'])]
     public function home(): Response
     {
         return $this->render('home.html.twig');
     }
 
-    #[Route('/app', name: 'app_index')]
+    #[Route('/app', name: 'app_index', methods: ['GET'])]
     public function index(SubjectRepository $subjectRepository): Response
     {
         /** @var Student $student */
         $student = $this->getUser();
 
         $allowedSubjects = $subjectRepository->findAllowedSubjects($student);
+
         return $this->render('app/index.html.twig', [
             'controller_name' => 'AppController',
             'allowedSubjects' => $allowedSubjects,

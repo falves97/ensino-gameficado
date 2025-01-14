@@ -31,11 +31,18 @@ class QuestionCrudController extends AbstractCrudController
         return [
             FormField::addColumn(12),
             IdField::new('id')->hideOnForm(),
-            AssociationField::new('test'),
+            AssociationField::new('tests')
+                ->hideWhenUpdating(),
             TextEditorField::new('description'),
+            CollectionField::new('alternatives')
+                ->showEntryLabel()
+                ->useEntryCrudForm(AlternativeCrudController::class),
             CollectionField::new('alternatives')
                 ->setEntryIsComplex()
                 ->useEntryCrudForm(AlternativeCrudController::class)
+                ->allowDelete(false)
+                ->allowAdd(false)
+                ->onlyWhenUpdating(),
         ];
     }
 }

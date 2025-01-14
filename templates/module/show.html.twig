@@ -2,26 +2,45 @@
 
 {% block title %}Módulo {{ module.name }}{% endblock %}
 
+{% block breadcrumb %}
+    <nav class="bg-gray-100 py-2">
+        <div class="container mx-auto px-4">
+            <ol class="list-none p-0 inline-flex">
+                <li class="flex items">
+                    <a href="{{ url('app_index') }}" class="text-blue-500">Home</a>
+                    <span class="mx-2">/</span>
+                </li>
+                <li class="flex items"><a href="{{ url('app_subject_show', {'id': module.subject.id}) }}"
+                                          class="text-blue-500">{{ module.subject.name }}</a>
+                    <span class="mx-2">/</span>
+                <li class="flex items">
+                    <span class="text-gray-500">{{ module.name }}</span>
+                </li>
+            </ol>
+        </div>
+    </nav>
+{% endblock %}
+
 {% block body %}
     <main class="flex-grow container mx-auto my-8 p-4">
 
         <h2 class="text-2xl font-semibold mb-6">Módulo: {{ module.name }}</h2>
 
         <section class="bg-white rounded-lg shadow-md p-6 mb-6">
-            {{ module.content }}
+            {{ module.content|raw }}
         </section>
 
         <h2 class="text-2xl font-semibold mb-6">Testes do Módulo</h2>
 
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-            {% for test in module.tests %}
+            {% for test in tests %}
                 <article class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-semibold">{{ test.name }}</h3>
                     </div>
                     <div class="flex justify-between items-center">
                                 <span class="text-sm text-blue-600">
-                                    {% if test.isRealizedByStudent(app.user) %}
+                                    {% if test.isRealizedByStudent %}
                                         Nota: {{ test.grade }}
                                     {% else %}
                                         Não realizado

@@ -40,4 +40,28 @@ class StudentTestRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findStudentTestByStudentAndTest(int $studentId, int $testId): ?StudentTest
+    {
+        return $this->createQueryBuilder('st')
+            ->andWhere('st.student = :studentId')
+            ->andWhere('st.test = :testId')
+            ->setParameter('studentId', $studentId)
+            ->setParameter('testId', $testId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findByStudentAndModule(int $studentId, int $moduleId): array
+    {
+        return $this->createQueryBuilder('st')
+            ->join('st.test', 't')
+            ->join('t.module', 'm')
+            ->andWhere('st.student = :studentId')
+            ->andWhere('m.id = :moduleId')
+            ->setParameter('studentId', $studentId)
+            ->setParameter('moduleId', $moduleId)
+            ->getQuery()
+            ->getResult();
+    }
 }

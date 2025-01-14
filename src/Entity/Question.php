@@ -20,19 +20,22 @@ class Question
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'questions')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Test $test = null;
-
     /**
      * @var Collection<int, Alternative>
      */
     #[ORM\OneToMany(targetEntity: Alternative::class, mappedBy: 'question', cascade: ['persist'], orphanRemoval: true)]
     private Collection $alternatives;
 
+    /**
+     * @var Collection<int, Test>
+     */
+    #[ORM\ManyToMany(targetEntity: Test::class, mappedBy: 'questions')]
+    private Collection $tests;
+
     public function __construct()
     {
         $this->alternatives = new ArrayCollection();
+        $this->tests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -52,14 +55,29 @@ class Question
         return $this;
     }
 
-    public function getTest(): ?Test
+    /**
+     * @return Collection<int, Test>
+     */
+    public function getTests(): Collection
     {
-        return $this->test;
+        return $this->tests;
     }
 
-    public function setTest(?Test $test): static
+    public function addTest(Test $test): static
     {
-        $this->test = $test;
+        if (!$this->tests->contains($test)) {
+            $this->tests->add($test);
+            $test->addQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTest(Test $test): static
+    {
+        if ($this->tests->removeElement($test)) {
+            $test->removeQuestion($this);
+        }
 
         return $this;
     }
@@ -92,5 +110,21 @@ class Question
         }
 
         return $this;
+    }
+
+    public function getCorrectAlternative(): ?Alternative
+    {
+        foreach ($this->alternatives as $alternative) {
+            if ($alternative->isCorrect()) {
+                return $alternative;
+            }
+        }
+
+        return null;
+    }
+
+    public function __toString(): string
+    {
+        return $this->description;
     }
 }
