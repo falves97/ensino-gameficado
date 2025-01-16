@@ -91,8 +91,8 @@
     "post-update-cmd": [
       "@auto-scripts"
     ],
-    "php-cs-fixer:dry-run": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --diff --verbose --dry-run",
-    "php-cs-fixer:fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --diff --verbose",
+    "phpcs:dry-run": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --diff --verbose --dry-run",
+    "phpcs:fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --diff --verbose",
     "tailwind:watch": [
       "Composer\\Config::disableProcessTimeout",
       "bin/console tailwind:build --watch"
