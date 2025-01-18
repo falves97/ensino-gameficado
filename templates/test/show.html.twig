@@ -11,16 +11,16 @@
                     <span class="mx-2">/</span>
                 </li>
                 <li class="flex items">
-                    <a href="{{ url('app_subject_show', {'id': studentTest.test.module.subject.id}) }}"
-                       class="text-blue-500">{{ studentTest.test.module.subject.name }}</a>
+                    <a href="{{ url('app_subject_show', {'id': test.module.subject.id}) }}"
+                       class="text-blue-500">{{ test.module.subject.name }}</a>
                     <span class="mx-2">/</span>
                 <li class="flex items">
-                    <a href="{{ url('app_module_show', {'id': studentTest.test.module.id}) }}"
-                       class="text-blue-500">{{ studentTest.test.module.name }}</a>
+                    <a href="{{ url('app_module_show', {'id': test.module.id}) }}"
+                       class="text-blue-500">{{ test.module.name }}</a>
                     <span class="mx-2">/</span>
                 </li>
                 <li class="flex items">
-                    <span class="text-gray-500">{{ studentTest.test.name }}</span>
+                    <span class="text-gray-500">{{ test.name }}</span>
                 </li>
             </ol>
         </div>
