@@ -11,9 +11,13 @@ use Symfony\Component\Routing\Attribute\Route;
 class AppController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods: ['GET'])]
-    public function home(): Response
+    public function home(SubjectRepository $subjectRepository): Response
     {
-        return $this->render('home.html.twig');
+        $subjects = $subjectRepository->findAll();
+
+        return $this->render('home.html.twig', [
+            'subjects' => $subjects,
+        ]);
     }
 
     #[Route('/app', name: 'app_index', methods: ['GET'])]
