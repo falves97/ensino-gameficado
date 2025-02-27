@@ -6,7 +6,8 @@
     <nav class="bg-gray-100 py-2">
         <div class="container mx-auto px-4">
             <ol class="list-none p-0 inline-flex">
-                <li class="flex items"><a href="{{ url('app_index') }}" class="text-blue-500">Home</a>
+                <li class="flex items"><a href="{{ app.user ? url('app_index') : url('app_home') }}"
+                                          class="text-blue-500">Home</a>
                     <span class="mx-2">/</span>
                 </li>
                 <li class="flex items">
@@ -18,7 +19,7 @@
 {% endblock %}
 
 {% block body %}
-    {% set containsSubject = app.user.subjects.contains(subject) %}
+    {% set containsSubject = app.user.subjects.contains(subject) ?? false %}
     <main class="flex-grow container mx-auto my-8 p-4">
 
         <h2 class="text-2xl font-semibold mb-6">Módulos - {{ subject.name }}</h2>
